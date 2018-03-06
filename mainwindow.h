@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QList>
+#include <dbmanager.h>
 
 namespace Ui {
 class MainWindow;
@@ -15,8 +17,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+
 private:
     Ui::MainWindow *ui;
+    DBManager dbManager;
+
+    void createSections();
 };
 
 #endif // MAINWINDOW_H
