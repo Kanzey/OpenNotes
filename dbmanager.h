@@ -18,6 +18,8 @@ public:
 
     QList<Section> getSections();
     void getSections(QList<Section>& sectionList);
+    //QList<Note> getNotes();
+    //void getNotes(QList<Note>& noteList);
 };
 
 #endif // DBMANAGER_H

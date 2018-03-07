@@ -1,6 +1,7 @@
 #include "qctabwidget.h"
 
-QCTabWidget::QCTabWidget(QWidget *parent):QTabWidget(parent){
+QCTabWidget::QCTabWidget(QWidget *parent):
+    QTabWidget(parent){
 
 }
 

@@ -3,7 +3,11 @@
 
 #include <QMainWindow>
 #include <QList>
+#include <QListView>
+#include <QSqlQueryModel>
 #include <dbmanager.h>
+#include <notedelegate.h>
+#include <QFrame>
 
 namespace Ui {
 class MainWindow;

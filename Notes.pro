@@ -30,14 +30,18 @@ SOURCES += \
     dbmanager.cpp \
     qctabwidget.cpp \
     qctabbar.cpp \
-    section.cpp
+    section.cpp \
+    note.cpp \
+    notedelegate.cpp
 
 HEADERS += \
         mainwindow.h \
     dbmanager.h \
     qctabwidget.h \
     qctabbar.h \
-    section.h
+    section.h \
+    note.h \
+    notedelegate.h
 
 FORMS += \
         mainwindow.ui
