@@ -59,8 +59,16 @@ void NoteDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 QSize NoteDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+
     int store=0;
-    int width = ((QWidget*)parent())->width();
+    QListView* par= ((QListView*)parent());
+    int width = par->width();
+    if(option.rect.width() == 0){
+        qDebug() << "Zero width rect" << par->gridSize() ;
+
+    }
+    if(option.rect.width() != 0)
+        width = option.rect.width();
     qDebug() << option.rect;
     QPair<int,int>* cachePtr = cache[index];
     if(cachePtr != nullptr){
@@ -86,9 +94,10 @@ QSize NoteDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
     tmp += fm.boundingRect(rect.adjusted(20,tmp,0,0),
                            Qt::TextWordWrap, textIndex.data().toString()).height();
     QPair<int,int>* objectPtr = new QPair<int,int>(width,tmp);
-    const_cast<NoteDelegate*>(this)->cache.insert(index,objectPtr);
-    if(store != tmp)
-    const_cast<NoteDelegate*>(this)->sizeHintChanged(index);
+    if(option.rect.width() != 0 && store != tmp){
+        const_cast<NoteDelegate*>(this)->cache.insert(index,objectPtr);
+        const_cast<NoteDelegate*>(this)->sizeHintChanged(index);
+    }
     qDebug() << "Computing Size" << index.row() << "for width" << width;
     return QSize(width,tmp);
 }
