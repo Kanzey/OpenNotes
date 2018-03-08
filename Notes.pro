@@ -32,7 +32,8 @@ SOURCES += \
     qctabbar.cpp \
     section.cpp \
     note.cpp \
-    notedelegate.cpp
+    notedelegate.cpp \
+    settingmanager.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -41,7 +42,8 @@ HEADERS += \
     qctabbar.h \
     section.h \
     note.h \
-    notedelegate.h
+    notedelegate.h \
+    settingmanager.h
 
 FORMS += \
         mainwindow.ui
