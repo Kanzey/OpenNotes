@@ -6,6 +6,7 @@
 #include <QApplication>
 #include <QDebug>
 #include <QCache>
+#include <QAbstractItemView>
 
 class NoteDelegate : public QStyledItemDelegate
 {

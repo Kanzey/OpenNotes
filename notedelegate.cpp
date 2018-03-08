@@ -15,6 +15,7 @@ NoteDelegate::NoteDelegate(QColor baseColor, QWidget *parent):
 
 void NoteDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+          qDebug() << option.rect << "Paint rect";
           QModelIndex inx = index.model()->index(index.row(),1);
           QModelIndex tagi = index.model()->index(index.row(),2);
           QStringList tags = tagi.data().toString().split(',',QString::SkipEmptyParts);
@@ -36,9 +37,9 @@ void NoteDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
           font.setPointSize(8);
           font.setBold(false);
           painter->setFont(font);
-          rect.moveTop(rect.height());
+          rect.moveTop(rect.y()+rect.height());
           rect.setHeight(painter->fontMetrics().height()*1.5);
-          QRect tagRect = rect.adjusted(16,0,0,0);
+          QRect tagRect = rect.adjusted(20,0,0,0);
           QRect bound;
 
           for(int i=0; i<tags.size(); ++i){
@@ -47,7 +48,7 @@ void NoteDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
           }
           font.setPointSize(9);
           painter->setFont(font);
-          painter->drawText(option.rect.adjusted(16,rect.height()+rect.y(),0,0),Qt::TextWordWrap  ,inx.data().toString());
+          painter->drawText(option.rect.adjusted(16,rect.y()-option.rect.y()+rect.height(),0,0),Qt::TextWordWrap  ,inx.data().toString());
 
           painter->drawRect(option.rect);
           //progressBarOption.rect.moveBottom(progressBarOption.rect.bottom()+100);
@@ -58,13 +59,20 @@ void NoteDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 QSize NoteDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    //qDebug() << option.rect << index.data();
+    int store=0;
+    int width = ((QWidget*)parent())->width();
+    qDebug() << option.rect;
     QPair<int,int>* cachePtr = cache[index];
-    if(cachePtr != nullptr && cachePtr->first == option.rect.width()){
-        qDebug() << "Using cache" << index.row() << "for width" << option.rect.width();
-        return QSize(100,cachePtr->second);
+    if(cachePtr != nullptr){
+        if(cachePtr->first == width){
+        qDebug() << "Using cache" << index.row() << "for width" << width;
+        return QSize(width,cachePtr->second);
+        }
+        store = cachePtr->second;
     }
     const QModelIndex textIndex = index.sibling(index.row(),1);
+    QRect rect = option.rect;
+    rect.setWidth(width);
     int tmp=4;
     QFont font = option.font;
     font.setPointSize(11);
@@ -75,10 +83,12 @@ QSize NoteDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
     font.setPointSize(9);
     QFontMetrics fm(font);
     tmp += 1.5* dfm.height();
-    tmp += fm.boundingRect(option.rect.adjusted(20,tmp,0,0),
+    tmp += fm.boundingRect(rect.adjusted(20,tmp,0,0),
                            Qt::TextWordWrap, textIndex.data().toString()).height();
-    QPair<int,int>* objectPtr = new QPair<int,int>(option.rect.width(),tmp);
+    QPair<int,int>* objectPtr = new QPair<int,int>(width,tmp);
     const_cast<NoteDelegate*>(this)->cache.insert(index,objectPtr);
-    qDebug() << "Computing Size" << index.row() << "for width" << option.rect.width();
-    return QSize(100,tmp);
+    if(store != tmp)
+    const_cast<NoteDelegate*>(this)->sizeHintChanged(index);
+    qDebug() << "Computing Size" << index.row() << "for width" << width;
+    return QSize(width,tmp);
 }

@@ -23,6 +23,8 @@ void MainWindow::createSections()
         ui->tabWidget->addTab( qf,list[i].name);
         QGridLayout *l =new QGridLayout(qf);
         QListView *qw = new QListView;
+        qw->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+        l->setMargin(0);
         l->addWidget(qw,0,0,1,1);
         QSqlQueryModel *model = new QSqlQueryModel;
         QSqlQuery q;
@@ -32,7 +34,7 @@ void MainWindow::createSections()
         model->setQuery(q);
         qw->setModel(model);
         qw->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        qw->setItemDelegate(new NoteDelegate(list[i].tabColor));
+        qw->setItemDelegate(new NoteDelegate(list[i].tabColor,qw));
         //qw->show();
     }
 }
