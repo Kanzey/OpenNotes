@@ -7,6 +7,8 @@
 #include <QSqlQueryModel>
 #include <dbmanager.h>
 #include <notedelegate.h>
+#include <settingmanager.h>
+#include <notelistoptionsdialog.h>
 #include <QFrame>
 
 namespace Ui {
@@ -27,6 +29,8 @@ private:
     DBManager dbManager;
 
     void createSections();
+private slots:
+    void NoteListOptions();
 };
 
 #endif // MAINWINDOW_H

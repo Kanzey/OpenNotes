@@ -38,3 +38,8 @@ void MainWindow::createSections()
         //qw->show();
     }
 }
+void MainWindow::NoteListOptions()
+{
+    NoteListOptionsDialog nd;
+    nd.exec();
+}
