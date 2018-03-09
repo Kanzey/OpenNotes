@@ -9,6 +9,7 @@
 #include <notedelegate.h>
 #include <settingmanager.h>
 #include <notelistoptionsdialog.h>
+#include <notedisplaysettings.h>
 #include <QFrame>
 
 namespace Ui {
@@ -23,12 +24,15 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    NoteDisplaySettings* noteDisplaySettings;
 
 private:
     Ui::MainWindow *ui;
     DBManager dbManager;
 
     void createSections();
+    void createOptions();
+
 private slots:
     void NoteListOptions();
 };

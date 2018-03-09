@@ -34,7 +34,8 @@ SOURCES += \
     note.cpp \
     notedelegate.cpp \
     settingmanager.cpp \
-    notelistoptionsdialog.cpp
+    notelistoptionsdialog.cpp \
+    notedisplaysettings.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -45,7 +46,8 @@ HEADERS += \
     note.h \
     notedelegate.h \
     settingmanager.h \
-    notelistoptionsdialog.h
+    notelistoptionsdialog.h \
+    notedisplaysettings.h
 
 FORMS += \
         mainwindow.ui \

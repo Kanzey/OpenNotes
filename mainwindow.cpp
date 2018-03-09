@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    createOptions();
     createSections();
 }
 
@@ -34,12 +35,20 @@ void MainWindow::createSections()
         model->setQuery(q);
         qw->setModel(model);
         qw->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        qw->setItemDelegate(new NoteDelegate(list[i].tabColor,qw));
+        qw->setItemDelegate(new NoteDelegate(list[i].tabColor,noteDisplaySettings, qw));
         //qw->show();
     }
+}
+
+void MainWindow::createOptions()
+{
+    noteDisplaySettings = new NoteDisplaySettings(this);
 }
 void MainWindow::NoteListOptions()
 {
     NoteListOptionsDialog nd;
-    nd.exec();
+    if(nd.exec() == QDialog::Accepted){
+         nd.ds.saveConfig();
+         noteDisplaySettings->loadConfig();
+    }
 }

@@ -6,6 +6,8 @@ NoteListOptionsDialog::NoteListOptionsDialog(QWidget *parent) :
     ui(new Ui::NoteListOptionsDialog)
 {
     ui->setupUi(this);
+    setFontPreview(ui->headerFontPreview, ds.headerFont);
+    setFontPreview(ui->textFontPreview, ds.textFont);
 }
 
 NoteListOptionsDialog::~NoteListOptionsDialog()
@@ -15,22 +17,33 @@ NoteListOptionsDialog::~NoteListOptionsDialog()
 
 void NoteListOptionsDialog::on_headerFontButton_clicked()
 {
-    dialogLogic(ui->headerFontPreview);
+    dialogLogic(ui->headerFontPreview, ds.headerFont);
 }
 
 void NoteListOptionsDialog::on_textFontButton_clicked()
 {
-    dialogLogic(ui->textFontPreview);
+    dialogLogic(ui->textFontPreview, ds.textFont);
 }
 
-void NoteListOptionsDialog::dialogLogic(QLabel* preview)
+void NoteListOptionsDialog::dialogLogic(QLabel* preview, QFont& orgFont)
 {
     bool ok;
     QFont font = QFontDialog::getFont(
-                &ok, preview->font(), this);
+                &ok, orgFont, this);
     if(ok){
-        preview->setFont(font);
-        QString text = font.family() + " " + font.styleName() + " " + QString::number(font.pointSize()) + " pt";
-        preview->setText(text);
+        setFontPreview(preview,font);
+        orgFont = font;
     }
+
+}
+
+void NoteListOptionsDialog::setFontPreview(QLabel *preview, QFont &font)
+{
+    preview->setFont(font);
+    preview->setText(fontDescription(font));
+}
+
+QString NoteListOptionsDialog::fontDescription(QFont font)
+{
+    return font.family() + " " + font.styleName() + " " + QString::number(font.pointSize()) + " pt";
 }

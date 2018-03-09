@@ -1,8 +1,8 @@
 #include "notedelegate.h"
 
-NoteDelegate::NoteDelegate(QColor baseColor, QWidget *parent):
-    QStyledItemDelegate(parent)
-
+NoteDelegate::NoteDelegate(QColor baseColor, NoteDisplaySettings *ds, QWidget *parent):
+    QStyledItemDelegate(parent),
+    displaySettings(ds)
 {
     qreal h = baseColor.hueF();
     sTextColor = QColor::fromHsvF(h,0.31,0.49);
@@ -20,10 +20,7 @@ void NoteDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
           QModelIndex tagi = index.model()->index(index.row(),2);
           QStringList tags = tagi.data().toString().split(',',QString::SkipEmptyParts);
           QRect rect = option.rect;
-          QFont font = painter->font();
-          font.setPointSize(11);
-          font.setBold(true);
-          painter->setFont(font);
+          painter->setFont(displaySettings->headerFont);
           rect.setHeight( 1.5 * painter->fontMetrics().height());
           if(option.state & QStyle::State_Selected){
             painter->fillRect(rect, sDecorationColor);
@@ -34,8 +31,8 @@ void NoteDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
           }
           //qDebug() << index.data().toString();
           painter->drawText(rect.adjusted(24,0,0,0), Qt::AlignVCenter, index.data().toString());
+          QFont font = option.font;
           font.setPointSize(8);
-          font.setBold(false);
           painter->setFont(font);
           rect.moveTop(rect.y()+rect.height());
           rect.setHeight(painter->fontMetrics().height()*1.5);
@@ -46,8 +43,7 @@ void NoteDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
               painter->drawText(tagRect, Qt::AlignVCenter, tags[i], &bound);
               tagRect.adjust(bound.width()+8,0,0,0);
           }
-          font.setPointSize(9);
-          painter->setFont(font);
+          painter->setFont(displaySettings->textFont);
           painter->drawText(option.rect.adjusted(16,rect.y()-option.rect.y()+rect.height(),0,0),Qt::TextWordWrap  ,inx.data().toString());
 
           painter->drawRect(option.rect);
@@ -83,13 +79,11 @@ QSize NoteDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
     rect.setWidth(width);
     int tmp=4;
     QFont font = option.font;
-    font.setPointSize(11);
-    QFontMetrics dfm(font);
+    QFontMetrics dfm(displaySettings->headerFont);
     font.setPointSize(8);
     QFontMetrics sfm(font);
     tmp += 1.5 * sfm.height();
-    font.setPointSize(9);
-    QFontMetrics fm(font);
+    QFontMetrics fm(displaySettings->textFont);
     tmp += 1.5* dfm.height();
     tmp += fm.boundingRect(rect.adjusted(20,tmp,0,0),
                            Qt::TextWordWrap, textIndex.data().toString()).height();

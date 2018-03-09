@@ -1,7 +1,9 @@
 #ifndef NOTEDISPLAYSETTINGS_H
 #define NOTEDISPLAYSETTINGS_H
 
+#include <QFont>
 #include <QObject>
+#include "settingmanager.h"
 
 class NoteDisplaySettings : public QObject
 {
@@ -9,9 +11,10 @@ class NoteDisplaySettings : public QObject
 public:
     explicit NoteDisplaySettings(QObject *parent = nullptr);
 
-signals:
-
-public slots:
+    void loadConfig();
+    void saveConfig();
+    QFont headerFont;
+    QFont textFont;
 };
 
 #endif // NOTEDISPLAYSETTINGS_H

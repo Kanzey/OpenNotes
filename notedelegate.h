@@ -8,6 +8,7 @@
 #include <QCache>
 #include <QListView>
 #include <QAbstractItemView>
+#include <notedisplaysettings.h>
 
 class NoteDelegate : public QStyledItemDelegate
 {
@@ -19,9 +20,10 @@ private:
     QColor decorationColor;
     QColor textColor;
     QCache<QModelIndex, QPair<int,int>> cache;
+    NoteDisplaySettings* displaySettings;
 
 public:
-    NoteDelegate(QColor baseColor, QWidget *parent=nullptr);
+    NoteDelegate(QColor baseColor, NoteDisplaySettings * ds, QWidget *parent=nullptr);
     void paint();
 
     // QAbstractItemDelegate interface
