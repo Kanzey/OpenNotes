@@ -10,6 +10,7 @@
 #include <settingmanager.h>
 #include <notelistoptionsdialog.h>
 #include <notedisplaysettings.h>
+#include "notedisplay.h"
 #include <QFrame>
 
 namespace Ui {

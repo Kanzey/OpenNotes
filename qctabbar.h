@@ -11,13 +11,14 @@ class QCTabBar : public QTabBar
 public:
     QCTabBar(QHash<QString, Section> *sections, QWidget *parent=0);
 
-protected:
-    void paintEvent(QPaintEvent */*event*/);
-
-
 private:
     QHash<QString, Section> * sections;
     ~QCTabBar();
+
+    // QTabBar interface
+protected:
+    void paintEvent(QPaintEvent */*event*/);
+    QSize tabSizeHint(int index) const override;
 };
 
 #endif // QCTABBAR_H

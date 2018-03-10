@@ -22,6 +22,13 @@ void QCTabBar::paintEvent(QPaintEvent *){
     }
 }
 
+QSize QCTabBar::tabSizeHint(int index) const
+{
+    QSize tmp = QTabBar::tabSizeHint(index);
+    tmp.setWidth(qMax(tmp.width(),((QWidget*)parent())->size().width()/count()));;
+    return tmp;
+}
+
 QCTabBar::~QCTabBar(){
     delete sections;
 }

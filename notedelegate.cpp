@@ -32,7 +32,7 @@ void NoteDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
           //qDebug() << index.data().toString();
           painter->drawText(rect.adjusted(24,0,0,0), Qt::AlignVCenter, index.data().toString());
           QFont font = option.font;
-          font.setPointSize(8);
+          font.setPointSize(9);
           painter->setFont(font);
           rect.moveTop(rect.y()+rect.height());
           rect.setHeight(painter->fontMetrics().height()*1.5);
@@ -44,7 +44,8 @@ void NoteDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
               tagRect.adjust(bound.width()+8,0,0,0);
           }
           painter->setFont(displaySettings->textFont);
-          painter->drawText(option.rect.adjusted(16,rect.y()-option.rect.y()+rect.height(),0,0),Qt::TextWordWrap  ,inx.data().toString());
+          painter->setPen("black");
+          painter->drawText(option.rect.adjusted(16,rect.y()-option.rect.y()+rect.height()+4,-10,0),Qt::TextWordWrap  ,inx.data().toString());
 
           painter->drawRect(option.rect);
           //progressBarOption.rect.moveBottom(progressBarOption.rect.bottom()+100);
@@ -61,10 +62,7 @@ QSize NoteDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
     int width = par->width();
     if(option.rect.width() == 0){
         qDebug() << "Zero width rect" << par->gridSize() ;
-
     }
-    if(option.rect.width() != 0)
-        width = option.rect.width();
     qDebug() << option.rect;
     QPair<int,int>* cachePtr = cache[index];
     if(cachePtr != nullptr){
@@ -76,16 +74,16 @@ QSize NoteDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
     }
     const QModelIndex textIndex = index.sibling(index.row(),1);
     QRect rect = option.rect;
-    rect.setWidth(width);
-    int tmp=4;
+    rect.setWidth(option.rect.width()?option.rect.width():width);
+    int tmp=8;
     QFont font = option.font;
     QFontMetrics dfm(displaySettings->headerFont);
-    font.setPointSize(8);
+    font.setPointSize(9);
     QFontMetrics sfm(font);
     tmp += 1.5 * sfm.height();
     QFontMetrics fm(displaySettings->textFont);
     tmp += 1.5* dfm.height();
-    tmp += fm.boundingRect(rect.adjusted(20,tmp,0,0),
+    tmp += fm.boundingRect(rect.adjusted(16,tmp,-10,0),
                            Qt::TextWordWrap, textIndex.data().toString()).height();
     QPair<int,int>* objectPtr = new QPair<int,int>(width,tmp);
     if(option.rect.width() != 0 && store != tmp){
