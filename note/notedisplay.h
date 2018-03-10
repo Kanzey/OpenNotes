@@ -5,9 +5,9 @@
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <section.h>
-#include <notedelegate.h>
+#include <note/notedelegate.h>
 #include <tagdelegate.h>
-#include <notedisplaysettings.h>
+#include <note/notedisplaysettings.h>
 
 namespace Ui {
 class NoteDisplay;

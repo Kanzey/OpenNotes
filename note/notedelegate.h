@@ -8,7 +8,7 @@
 #include <QCache>
 #include <QListView>
 #include <QAbstractItemView>
-#include <notedisplaysettings.h>
+#include <note/notedisplaysettings.h>
 
 class NoteDelegate : public QStyledItemDelegate
 {

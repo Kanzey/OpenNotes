@@ -31,13 +31,14 @@ SOURCES += \
     qctabwidget.cpp \
     qctabbar.cpp \
     section.cpp \
-    note.cpp \
-    notedelegate.cpp \
     settingmanager.cpp \
-    notelistoptionsdialog.cpp \
-    notedisplaysettings.cpp \
-    notedisplay.cpp \
-    tagdelegate.cpp
+    tagdelegate.cpp \
+    note/note.cpp \
+    note/notedelegate.cpp \
+    note/notelistoptionsdialog.cpp \
+    note/notedisplaysettings.cpp \
+    note/notedisplay.cpp \
+
 
 HEADERS += \
         mainwindow.h \
@@ -45,17 +46,17 @@ HEADERS += \
     qctabwidget.h \
     qctabbar.h \
     section.h \
-    note.h \
-    notedelegate.h \
     settingmanager.h \
-    notelistoptionsdialog.h \
-    notedisplaysettings.h \
-    notedisplay.h \
-    tagdelegate.h
+    tagdelegate.h \
+    note/note.h \
+    note/notedelegate.h \
+    note/notedisplay.h \
+    note/notedisplaysettings.h \
+    note/notelistoptionsdialog.h
 
 FORMS += \
-        mainwindow.ui \
-    notelistoptionsdialog.ui \
-    notedisplay.ui
+    note/notedisplay.ui \
+    note/notelistoptionsdialog.ui \
+    mainwindow.ui
 
 DISTFILES +=
