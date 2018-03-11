@@ -6,7 +6,9 @@
 #include <QSqlError>
 #include <QList>
 #include <QSqlQuery>
+
 #include <section.h>
+#include <note/note.h>
 
 class DBManager
 {
@@ -18,8 +20,8 @@ public:
 
     QList<Section> getSections();
     void getSections(QList<Section>& sectionList);
-    //QList<Note> getNotes();
-    //void getNotes(QList<Note>& noteList);
+    QList<Note> getNotes(int id);
+    void getNotes(QList<Note>& noteList, int id);
 };
 
 #endif // DBMANAGER_H
