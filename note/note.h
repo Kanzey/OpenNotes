@@ -6,8 +6,11 @@
 class Note
 {
 public:
+    quint32 id;
+    QString header;
     QString text;
-    Note();
+    QStringList tags;
+    Note(quint32 id, QString header, QString text, QString tags);
 };
 
 #endif // NOTE_H
