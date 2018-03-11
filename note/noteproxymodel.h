@@ -1,12 +1,23 @@
 #ifndef NOTEPROXYMODEL_H
 #define NOTEPROXYMODEL_H
 
-#include <QObject>
+#include <QDebug>
+#include <QSortFilterProxyModel>
 
 class NoteProxyModel : public QSortFilterProxyModel
 {
+    Q_OBJECT
+
 public:
-    NoteProxyModel();
+    NoteProxyModel(QObject *parent = 0);
+
+    void setFilterString(const QString & filterString);
+
+    // QSortFilterProxyModel interface
+protected:
+    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
+
+    QString filterString;
 };
 
 #endif // NOTEPROXYMODEL_H
