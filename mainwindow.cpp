@@ -36,3 +36,4 @@ void MainWindow::NoteListOptions()
          noteDisplaySettings->loadConfig();
     }
 }
+

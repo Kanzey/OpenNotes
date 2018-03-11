@@ -8,6 +8,7 @@
 #include <note/notedelegate.h>
 #include <tagdelegate.h>
 #include <note/notedisplaysettings.h>
+#include <note/noteproxymodel.h>
 
 namespace Ui {
 class NoteDisplay;
@@ -20,7 +21,6 @@ class NoteDisplay : public QWidget
 public:
     explicit NoteDisplay(Section section, NoteDisplaySettings* ds, QWidget *parent = 0);
     ~NoteDisplay();
-
 private:
     Section section;
     Ui::NoteDisplay *ui;

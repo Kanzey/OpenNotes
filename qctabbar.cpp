@@ -3,16 +3,20 @@
 QCTabBar::QCTabBar(QHash<QString, Section> *sections, QWidget *parent):
     QTabBar(parent), sections(sections)
 {
+    setMovable(true);
+    setExpanding(true);
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
 void QCTabBar::paintEvent(QPaintEvent *){
-
     QStylePainter painter(this);
     QStyleOptionTab opt;
 
     for(int i = 0;i < count();i++)
     {
         initStyleOption(&opt,i);
+        if(i == count()-1)
+            opt.rect.adjust(0,0,-1,0);
         if(sections->contains(opt.text)){
             //opt.palette.setColor(QPalette::Button, (*sections)[opt.text].tabColor);
             QPalette palette = QPalette((*sections)[opt.text].tabColor);
@@ -34,7 +38,7 @@ void QCTabBar::paintEvent(QPaintEvent *){
 QSize QCTabBar::tabSizeHint(int index) const
 {
     QSize tmp = QTabBar::tabSizeHint(index);
-    tmp.setWidth(qMax(tmp.width(),((QWidget*)parent())->size().width()/count()));;
+    tmp.setWidth(qMax(60,((QWidget*)parent())->size().width()/count()));
     return tmp;
 }
 

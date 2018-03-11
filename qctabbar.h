@@ -4,6 +4,7 @@
 #include <QTabBar>
 #include <QStylePainter>
 #include <QStyleOptionTab>
+#include <QDebug>
 #include <section.h>
 
 class QCTabBar : public QTabBar
@@ -19,6 +20,7 @@ private:
 protected:
     void paintEvent(QPaintEvent */*event*/);
     QSize tabSizeHint(int index) const override;
+
 };
 
 #endif // QCTABBAR_H

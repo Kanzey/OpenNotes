@@ -38,6 +38,7 @@ SOURCES += \
     note/notelistoptionsdialog.cpp \
     note/notedisplaysettings.cpp \
     note/notedisplay.cpp \
+    note/noteproxymodel.cpp
 
 
 HEADERS += \
@@ -52,7 +53,8 @@ HEADERS += \
     note/notedelegate.h \
     note/notedisplay.h \
     note/notedisplaysettings.h \
-    note/notelistoptionsdialog.h
+    note/notelistoptionsdialog.h \
+    note/noteproxymodel.h
 
 FORMS += \
     note/notedisplay.ui \

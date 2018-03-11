@@ -30,7 +30,10 @@ void NoteDisplay::setupLists(NoteDisplaySettings* ds)
     q.bindValue(":id", section.id);
     q.exec();
     model->setQuery(q);
-    ui->noteListView->setModel(model);
+    NoteProxyModel* modelProxy= new NoteProxyModel(ui->noteListView);
+    modelProxy->setSourceModel(model);
+    connect(ui->lineEdit, SIGNAL(textChanged(QString)), modelProxy, SLOT(setFilterString(QString)));
+    ui->noteListView->setModel(modelProxy);
     ui->noteListView->setItemDelegate(new NoteDelegate(section.tabColor, ds, ui->noteListView));
 }
 

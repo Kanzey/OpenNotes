@@ -10,7 +10,7 @@ class NoteProxyModel : public QSortFilterProxyModel
 
 public:
     NoteProxyModel(QObject *parent = 0);
-
+public slots:
     void setFilterString(const QString & filterString);
 
     // QSortFilterProxyModel interface
