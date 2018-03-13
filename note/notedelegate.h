@@ -9,6 +9,7 @@
 #include <QListView>
 #include <QAbstractItemView>
 #include <note/notedisplaysettings.h>
+#include <note/note.h>
 
 class NoteDelegate : public QStyledItemDelegate
 {

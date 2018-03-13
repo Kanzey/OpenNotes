@@ -24,12 +24,8 @@ NoteDisplay::~NoteDisplay()
 
 void NoteDisplay::setupLists(NoteDisplaySettings* ds)
 {
-    QSqlQueryModel *model = new QSqlQueryModel;
-    QSqlQuery q;
-    q.prepare("Select c0title, c1text, tag  From Notes  Left Join NotesData_content  ON id = docid Left join (Select noteid, group_concat(name) tag from Tags Left Join Notes_Tags  ON id = tagid group by noteid)  on noteid = id  Where sectionid = :id");
-    q.bindValue(":id", section.id);
-    q.exec();
-    model->setQuery(q);
+    NoteListModel * model = new NoteListModel(ui->noteListView);
+    model->loadNotes(DBManager::getInstance(),section.id);
     NoteProxyModel* modelProxy= new NoteProxyModel(ui->noteListView);
     modelProxy->setSourceModel(model);
     connect(ui->lineEdit, SIGNAL(textChanged(QString)), modelProxy, SLOT(setFilterString(QString)));

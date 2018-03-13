@@ -9,6 +9,9 @@
 #include <tagdelegate.h>
 #include <note/notedisplaysettings.h>
 #include <note/noteproxymodel.h>
+#include <note/notelistmodel.h>
+
+#include <QStandardItemModel>
 
 namespace Ui {
 class NoteDisplay;

@@ -29,7 +29,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    DBManager dbManager;
+    DBManager& dbManager;
 
     void createSections();
     void createOptions();

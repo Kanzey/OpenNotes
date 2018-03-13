@@ -16,9 +16,7 @@ NoteDelegate::NoteDelegate(QColor baseColor, NoteDisplaySettings *ds, QWidget *p
 void NoteDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
           qDebug() << option.rect << "Paint rect";
-          QModelIndex inx = index.model()->index(index.row(),1);
-          QModelIndex tagi = index.model()->index(index.row(),2);
-          QStringList tags = tagi.data().toString().split(',',QString::SkipEmptyParts);
+          Note note = index.data().value<Note>();
           QRect rect = option.rect;
           painter->setFont(displaySettings->headerFont);
           rect.setHeight( 1.5 * painter->fontMetrics().height());
@@ -30,7 +28,7 @@ void NoteDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
             painter->setPen(textColor);
           }
           //qDebug() << index.data().toString();
-          painter->drawText(rect.adjusted(24,0,0,0), Qt::AlignVCenter, index.data().toString());
+          painter->drawText(rect.adjusted(24,0,0,0), Qt::AlignVCenter, note.header);
           QFont font = option.font;
           font.setPointSize(9);
           painter->setFont(font);
@@ -39,13 +37,13 @@ void NoteDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
           QRect tagRect = rect.adjusted(20,0,0,0);
           QRect bound;
 
-          for(int i=0; i<tags.size(); ++i){
-              painter->drawText(tagRect, Qt::AlignVCenter, tags[i], &bound);
+          for(int i=0; i<note.tags.size(); ++i){
+              painter->drawText(tagRect, Qt::AlignVCenter, note.tags[i], &bound);
               tagRect.adjust(bound.width()+8,0,0,0);
           }
           painter->setFont(displaySettings->textFont);
           painter->setPen("black");
-          painter->drawText(option.rect.adjusted(16,rect.y()-option.rect.y()+rect.height()+4,-10,0),Qt::TextWordWrap  ,inx.data().toString());
+          painter->drawText(option.rect.adjusted(16,rect.y()-option.rect.y()+rect.height()+4,-10,0),Qt::TextWordWrap  ,note.text);
 
           painter->drawRect(option.rect);
           //progressBarOption.rect.moveBottom(progressBarOption.rect.bottom()+100);
@@ -58,6 +56,7 @@ QSize NoteDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
 {
 
     int store=0;
+    Note note = index.data().value<Note>();
     QListView* par= ((QListView*)parent());
     int width = par->width();
     if(option.rect.width() == 0){
@@ -72,7 +71,6 @@ QSize NoteDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
         }
         store = cachePtr->second;
     }
-    const QModelIndex textIndex = index.sibling(index.row(),1);
     QRect rect = option.rect;
     rect.setWidth(option.rect.width()?option.rect.width():width);
     int tmp=8;
@@ -84,7 +82,7 @@ QSize NoteDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
     QFontMetrics fm(displaySettings->textFont);
     tmp += 1.5* dfm.height();
     tmp += fm.boundingRect(rect.adjusted(16,tmp,-10,0),
-                           Qt::TextWordWrap, textIndex.data().toString()).height();
+                           Qt::TextWordWrap, note.text).height();
     QPair<int,int>* objectPtr = new QPair<int,int>(width,tmp);
     if(option.rect.width() != 0 && store != tmp){
         const_cast<NoteDelegate*>(this)->cache.insert(index,objectPtr);

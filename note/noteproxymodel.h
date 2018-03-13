@@ -3,6 +3,7 @@
 
 #include <QDebug>
 #include <QSortFilterProxyModel>
+#include <note/note.h>
 
 class NoteProxyModel : public QSortFilterProxyModel
 {

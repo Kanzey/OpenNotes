@@ -3,6 +3,7 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
+    dbManager(DBManager::getInstance()),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
